@@ -84,6 +84,7 @@
       "@typescript-eslint/no-non-null-assertion": "error",
       "@typescript-eslint/no-parameter-properties": "error",
       "@typescript-eslint/no-require-imports": "error",
+      "no-shadow": "off",
       "@typescript-eslint/no-shadow": [
           "error",
           {
@@ -227,7 +228,6 @@
       "no-return-await": "error",
       "no-self-assign": "error",
       "no-sequences": "error",
-      "no-shadow": "error",
       "no-sparse-arrays": "error",
       "no-template-curly-in-string": "error",
       "no-throw-literal": "error",
