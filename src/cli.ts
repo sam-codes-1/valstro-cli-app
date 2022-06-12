@@ -2,12 +2,7 @@ import {io} from 'socket.io-client'
 import {SearchResponseType} from './utils/types'
 import {WEB_SOCKET_CLIENT_EVENT_NAMES, INPUT_STREAM_READER_EVENTS} from './utils/eventNames'
 import {COMMANDS} from './commands/all.commands'
-import {
-  displaySearchResult,
-  showAboutMessage,
-  showHelpMessage,
-  showServerErrorMessage,
-} from './utils/logger'
+import {displaySearchResult, showAboutMessage, showHelpMessage, showServerErrorMessage} from './utils/logger'
 import dotenv from 'dotenv'
 import {InputStreamReader} from './prompts/InputStreamReader'
 import {isSearchQueryValid} from './utils/searchQuery'
@@ -23,7 +18,6 @@ export const CLI = async () => {
       reconnectionDelayMax: reconnectionDelayMax,
     })
     socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.CONNECT, () => {
-      
       consoleListener.on(INPUT_STREAM_READER_EVENTS.LINE, (data: string | undefined) => {
         consoleListener.prompt()
 

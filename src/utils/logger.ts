@@ -19,8 +19,9 @@ export const showConnectionMessage = () => {
 
 export const showWelcomeMessage = () => {
   console.log(
-  `${chalk.yellow.underline(Messages.TITLE)}
-  ${chalk.blue(Messages.INTRODUCTION)} ${nodeEmoji.get('rocket')} \n`)
+    `${chalk.yellow.underline(Messages.TITLE)}
+  ${chalk.blue(Messages.INTRODUCTION)} ${nodeEmoji.get('rocket')} \n`,
+  )
 }
 
 export const showServerErrorMessage = (additionalError: Error) => {
