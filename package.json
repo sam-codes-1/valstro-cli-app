@@ -17,7 +17,8 @@
     "watch-ts": "tsc -w",
     "watch-node": "nodemon dist/index.js",
     "format": "prettier --write '**/*.ts'",
-    "format:check": "prettier --list-different --loglevel=debug '**/*.ts'"
+    "format:check": "prettier --list-different --loglevel=debug '**/*.ts'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -50,6 +51,7 @@
     "eslint-plugin-security": "^1.5.0",
     "eslint-plugin-sonarjs": "^0.13.0",
     "eslint-plugin-unicorn": "^42.0.0",
+    "husky": "^8.0.0",
     "nodemon": "^2.0.16",
     "prettier": "^2.6.2",
     "ts-node": "^10.8.1",
