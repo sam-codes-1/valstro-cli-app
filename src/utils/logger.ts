@@ -19,8 +19,7 @@ export const showConnectionMessage = () => {
 
 export const showWelcomeMessage = () => {
   console.log(
-    `${chalk.yellow.underline(Messages.TITLE)}
-  ${chalk.blue(Messages.INTRODUCTION)} ${nodeEmoji.get('rocket')} \n`,
+    `${chalk.yellow.underline(Messages.TITLE)}\n${chalk.blue(Messages.INTRODUCTION)} ${nodeEmoji.get('rocket')} \n`,
   )
 }
 
@@ -59,7 +58,7 @@ export const displaySearchResult = (searchQuery: string | undefined, result: Sea
 export const showHelpMessage = () => {
   console.log(
     `
-    ${APPLICATION_NAME} is a CLI application used to search for the Star Wars API, which is a public REST API.\n\n
+    ${APPLICATION_NAME} is a CLI application used to search using the Star Wars API, a public REST API.\n\n
 
     usage:
     ${COMMANDS.HELP} or ${COMMANDS.HELP_KEY_BINDINGS}: Show help message \n
@@ -83,4 +82,19 @@ export const showAboutMessage = () => {
 
 export const showExitMessage = () => {
   console.log(`Thank you for using valstro CLI app. ${nodeEmoji.get('wave')}`)
+}
+
+export const showInitServerConn = () => {
+  console.log(`Initiating server connection. Please wait...`)
+}
+
+export const showServerConnected = () => {
+  console.log(`
+  Connected to server successfully ${nodeEmoji.get('white_check_mark')}
+  What would ypu like to search for?
+  Type ${COMMANDS.HELP} or ${COMMANDS.HELP_KEY_BINDINGS} for help`)
+}
+
+export const showInvalidSearchQueryMsg = () => {
+  console.log(`Invalid search query. If you need help, type ${COMMANDS.HELP} or ${COMMANDS.HELP_KEY_BINDINGS}`)
 }
