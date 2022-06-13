@@ -8,6 +8,9 @@ import {
   showHelpMessage,
   showServerErrorMessage,
   showExitMessage,
+  showInitServerConn,
+  showServerConnected,
+  showInvalidSearchQueryMsg,
 } from './utils/logger'
 import dotenv from 'dotenv'
 import {InputStreamReader} from './prompts/InputStreamReader'
@@ -20,12 +23,12 @@ const reconnectionDelayMax = 1000
 export const CLI = async () => {
   try {
     const consoleListener = new InputStreamReader()
-    console.log('Initiating server connection...')
+    showInitServerConn()
     const socket = io(webSocketServerUrl, {
       reconnectionDelayMax: reconnectionDelayMax,
     })
     socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.CONNECT, () => {
-      console.log('Connected to server')
+      showServerConnected()
       consoleListener.on(INPUT_STREAM_READER_EVENTS.LINE, (data: string | undefined) => {
         consoleListener.prompt()
 
@@ -33,7 +36,7 @@ export const CLI = async () => {
           case COMMANDS.EXIT:
           case COMMANDS.EXIT_KEY_BINDINGS:
             showExitMessage()
-            // socket.close()
+            socket.close()
             process.exit(0)
           case COMMANDS.HELP:
           case COMMANDS.HELP_KEY_BINDINGS:
@@ -51,14 +54,12 @@ export const CLI = async () => {
                 displaySearchResult(data, searchResponse)
               })
             } else {
-              consoleListener.print('Invalid search query')
+              showInvalidSearchQueryMsg()
             }
             consoleListener.prompt()
         }
       })
     })
-    // eslint-disable-next-line no-warning-comments
-    // TODO-THIS type error
   } catch (error) {
     showServerErrorMessage(error as Error)
   }
