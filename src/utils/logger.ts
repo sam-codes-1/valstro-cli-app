@@ -93,5 +93,5 @@ export const showInvalidSearchQueryMsg = (): void => {
 }
 
 export const getPromptQuestion = (): string => {
-  return 'What would you like to search for?'
+  return 'What character would you like to search for?'
 }
