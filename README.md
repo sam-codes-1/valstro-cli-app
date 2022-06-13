@@ -1,13 +1,11 @@
 # Valstro Take Home Project
 
-### This application is a web socket CLI client that communicates with a web socket server
-
-### Introduction 
+## Introduction 
 This application is a web socket CLI client that communicates with a web socket server
 
 The application provides a terminal to search for movies from the Star Wars API.
 
-### Requirements
+## Requirements
 To use this application you the following:
 - [yarn](https://classic.yarnpkg.com/lang/en/docs/install/#mac-stable) - Optional (You can run the npm command if you don't have yarn installed.)
 - [Node JS & NPM](https://nodejs.org/en/) - Required
