@@ -38,13 +38,13 @@ export const checkSearchComplete = (searchResult: SearchResponseType): boolean =
 
   return false
 }
-export const showSearchResult = (result: SearchResponseType): void => {
+export const showSearchResult = (searchData: string | undefined, result: SearchResponseType): void => {
   if (result.name) {
     console.log(`(${result.page}/${result.resultCount}) ${result.name} - [${result.films}]\n`)
   } else if (result.error) {
-    console.log(`Error fetching movies: ${result.error}\n`)
+    console.log(`${result.error}\n`)
   } else {
-    console.log(`${JSON.stringify(result)}------------------------------\n`)
+    console.log(`${JSON.stringify(result)}\n`)
   }
 }
 

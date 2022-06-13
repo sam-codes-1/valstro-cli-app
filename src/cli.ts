@@ -29,11 +29,12 @@ export const CLI = async () => {
     const socket = io(webSocketServerUrl, {
       reconnectionDelayMax: reconnectionDelayMax,
     })
+    let searchData: string | undefined
     socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.CONNECT, () => {
       showServerConnected()
       consoleListener.prompt()
       consoleListener.on(INPUT_STREAM_READER_EVENTS.LINE, (data: string | undefined) => {
-        const searchData = data
+        searchData = data
         switch (searchData) {
           case COMMANDS.EXIT:
           case COMMANDS.EXIT_KEY_BINDINGS:
@@ -50,6 +51,7 @@ export const CLI = async () => {
             break
           default:
             if (isSearchQueryValid(searchData)) {
+              console.log(`searching for ${searchData}. Please wait....`)
               socket.emit(WEB_SOCKET_CLIENT_EVENT_NAMES.SEARCH, {query: searchData})
             } else {
               showInvalidSearchQueryMsg()
@@ -69,7 +71,7 @@ export const CLI = async () => {
           }
         },
       ) => {
-        showSearchResult(searchResponse)
+        showSearchResult(searchData, searchResponse)
         const isSearchComplete = checkSearchComplete(searchResponse)
         callback(isSearchComplete)
       },
