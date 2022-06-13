@@ -6,7 +6,7 @@ import {COMMANDS} from '../commands/all.commands'
 import nodeEmoji from 'node-emoji'
 
 export const showTitle = () => {
-  console.log(`${chalk.bold.underline.blue(Messages.TITLE)} ${nodeEmoji.get('smile')}\n`)
+  console.log(`${chalk.bold.underline.blue(Messages.TITLE)}\n`)
 }
 
 export const showConnectionSuccessful = () => {
@@ -79,4 +79,8 @@ export const showAboutMessage = () => {
     When the responses are done loading, you can start a new search by typing your search query. \n
     To exit thus application at any time, type either 'exit', 'e', or press Ctrl + C. 
   `)
+}
+
+export const showExitMessage = () => {
+  console.log(`Thank you for using valstro CLI app. ${nodeEmoji.get('wave')}`)
 }
