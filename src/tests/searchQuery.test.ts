@@ -9,10 +9,6 @@ describe('Validate isSearchQueryValid function.', () => {
     const searchResponse = isSearchQueryValid('i')
     expect(searchResponse).toBeFalsy()
   })
-  it('Should reject values with signs', () => {
-    const searchResponse = isSearchQueryValid('+----+')
-    expect(searchResponse).toBeFalsy()
-  })
   it('Should accept values greater than or equal to 2', () => {
     const searchResponse = isSearchQueryValid('ie')
     expect(searchResponse).toBeTruthy()

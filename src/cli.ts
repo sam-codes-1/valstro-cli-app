@@ -3,7 +3,7 @@ import {SearchResponseType} from './utils/types'
 import {WEB_SOCKET_CLIENT_EVENT_NAMES, INPUT_STREAM_READER_EVENTS} from './utils/eventNames'
 import {COMMANDS} from './commands/all.commands'
 import {
-  displaySearchResult,
+  showSearchResult,
   showAboutMessage,
   showHelpMessage,
   showServerErrorMessage,
@@ -11,6 +11,8 @@ import {
   showInitServerConn,
   showServerConnected,
   showInvalidSearchQueryMsg,
+  getPromptQuestion,
+  checkSearchComplete,
 } from './utils/logger'
 import dotenv from 'dotenv'
 import {InputStreamReader} from './prompts/InputStreamReader'
@@ -29,10 +31,10 @@ export const CLI = async () => {
     })
     socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.CONNECT, () => {
       showServerConnected()
+      consoleListener.prompt()
       consoleListener.on(INPUT_STREAM_READER_EVENTS.LINE, (data: string | undefined) => {
-        consoleListener.prompt()
-
-        switch (data) {
+        const searchData = data
+        switch (searchData) {
           case COMMANDS.EXIT:
           case COMMANDS.EXIT_KEY_BINDINGS:
             showExitMessage()
@@ -47,19 +49,31 @@ export const CLI = async () => {
             showAboutMessage()
             break
           default:
-            if (isSearchQueryValid(data)) {
-              socket.emit(WEB_SOCKET_CLIENT_EVENT_NAMES.SEARCH, {query: data})
-
-              socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.SEARCH, (searchResponse: SearchResponseType) => {
-                displaySearchResult(data, searchResponse)
-              })
+            if (isSearchQueryValid(searchData)) {
+              socket.emit(WEB_SOCKET_CLIENT_EVENT_NAMES.SEARCH, {query: searchData})
             } else {
               showInvalidSearchQueryMsg()
             }
-            consoleListener.prompt()
         }
       })
     })
+
+    socket.on(
+      WEB_SOCKET_CLIENT_EVENT_NAMES.SEARCH,
+      (
+        searchResponse: SearchResponseType,
+        callback = (showPrompt: boolean) => {
+          if (showPrompt) {
+            consoleListener.print(getPromptQuestion())
+            consoleListener.prompt()
+          }
+        },
+      ) => {
+        showSearchResult(searchResponse)
+        const isSearchComplete = checkSearchComplete(searchResponse)
+        callback(isSearchComplete)
+      },
+    )
   } catch (error) {
     showServerErrorMessage(error as Error)
   }
