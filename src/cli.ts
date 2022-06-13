@@ -2,7 +2,13 @@ import {io} from 'socket.io-client'
 import {SearchResponseType} from './utils/types'
 import {WEB_SOCKET_CLIENT_EVENT_NAMES, INPUT_STREAM_READER_EVENTS} from './utils/eventNames'
 import {COMMANDS} from './commands/all.commands'
-import {displaySearchResult, showAboutMessage, showHelpMessage, showServerErrorMessage} from './utils/logger'
+import {
+  displaySearchResult,
+  showAboutMessage,
+  showHelpMessage,
+  showServerErrorMessage,
+  showExitMessage,
+} from './utils/logger'
 import dotenv from 'dotenv'
 import {InputStreamReader} from './prompts/InputStreamReader'
 import {isSearchQueryValid} from './utils/searchQuery'
@@ -14,18 +20,20 @@ const reconnectionDelayMax = 1000
 export const CLI = async () => {
   try {
     const consoleListener = new InputStreamReader()
+    console.log('Initiating server connection...')
     const socket = io(webSocketServerUrl, {
       reconnectionDelayMax: reconnectionDelayMax,
     })
     socket.on(WEB_SOCKET_CLIENT_EVENT_NAMES.CONNECT, () => {
+      console.log('Connected to server')
       consoleListener.on(INPUT_STREAM_READER_EVENTS.LINE, (data: string | undefined) => {
         consoleListener.prompt()
 
         switch (data) {
           case COMMANDS.EXIT:
           case COMMANDS.EXIT_KEY_BINDINGS:
-            consoleListener.print('bye')
-            socket.close()
+            showExitMessage()
+            // socket.close()
             process.exit(0)
           case COMMANDS.HELP:
           case COMMANDS.HELP_KEY_BINDINGS:
